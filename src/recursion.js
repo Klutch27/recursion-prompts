@@ -6,22 +6,77 @@
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
-var factorial = function(n) {
+//=== solution 1, tree recursion ====
+// var factorial = function(n) {
+
+//   if (n === 1) return 1;
+//   else return n * factorial(n - 1);
+
+// };
+// == solution 2, tail-call recursion
+var factorial = function(n, total = 1) {
+
+  if (n === 1) return total
+  else {
+    return factorial(n-1, total * n);
+  }
+
 };
+
+// console.log(factorial(5)) // => 120
 
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
 var sum = function(array) {
+  // iterate over every element in the array, and add it together..
+
+  if (array.length === 0) return 0;
+  else {
+    total = (array.splice(0, 1))[0] + sum(array);
+  }
+  return total;
 };
+
+console.log(sum([1, 2, 3, 4, 5,]))
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
+  // check if it's an array.
+  // if it is not an array, increase the total
+  // if it is an array, call the function again with the array passed in
+  // iterate over each element. If it is an array, have to go deeper into it -- create a new array, and concat the result of flattening each nested array..
+  // if it is not an array, push it into the top level flatArr..?
+  const flatArr = [];
+  if (Array.isArray(array)){
+    array.forEach((el)=>{
+      if (Array.isArray(el)){
+        flatArr.concat(arraySum(el));
+      }
+      else {
+        flatArr.push(el);
+      }
+    })
+    return flatArr;
+  }
+  else return 'Input is not an array.';
+
+
 };
+// not sure why this isn't working...?
+
+console.log(arraySum([1,[2,3],[[4]],5]));
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+
+  if (n === 1) return false;
+  else if (n === 2) return true;
+  else return isEven(n-2);
+
 };
+
+console.log(isEven(5));
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
