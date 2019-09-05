@@ -57,21 +57,30 @@ var arraySum = function(array) {
         flatArr.push(el);
       }
     })
-    return flatArr;
+    return sum(flatArr);
   }
   else return 'Input is not an array.';
 
 
 };
 // not sure why this isn't working...?
+// == SOLUTION FROM MARK
+/*
+var arraySum = function(array) {
+    if (array.length > 0) return arraySum(array[0]) + arraySum(array.slice(1));
+    if (array.length === 0) return 0;
+    else return array;
+};
+*/
 
 console.log(arraySum([1,[2,3],[[4]],5]));
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+  n = Math.abs(n);
 
   if (n === 1) return false;
-  else if (n === 2) return true;
+  else if (n === 2 || n === 0) return true;
   else return isEven(n-2);
 
 };
@@ -82,12 +91,35 @@ console.log(isEven(5));
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+  if (n === 0) return 0;
+  else {
+    return n + sumBelow(n-1);
+  }
+  // adds from 0 up to and including n... how to stop this?
 };
+console.log(sumBelow(10));
+console.log(sumBelow(7));
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
+// gotta find all the numbers, then put them into an array...
 var range = function(x, y) {
+  const newArr = [];
+  if (x === y){
+    const finalArray = newArr.map((el, i)=>{
+      if (i === 0) return;
+      else return el;
+      });
+      return finalArray;
+    }
+  else {
+    newArr.push(x);
+    return newArr.concat(range(x+1, y));
+  }
 };
+
+console.log(range(2,9)); // [3,4,5,6,7,8]
+
 
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.
